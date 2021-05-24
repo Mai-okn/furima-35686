@@ -2,16 +2,16 @@
 
 ## Usersテーブル
 
-|Column          |Type    |Options                   |
-|----------------|--------|--------------------------|
-| nickname       | string | null: false              |
-| password       | string | null: false              |
-| email          | string | null: false, unique: true|
-| last-name      | string | null: false              |
-|first-name      | string | null: false              |
-|last-name-kana  | string | null: false              |
-|first-name-kana | string | null: false              |
-|birthday        | integer| null: false              |
+|Column             |Type    |Options                   |
+|-------------------|--------|--------------------------|
+|nickname           | string | null: false              |
+|encrypted_password | string | null: false              |
+|email              | string | null: false, unique: true|
+|last-name          | string | null: false              |
+|first-name         | string | null: false              |
+|last-name-kana     | string | null: false              |
+|first-name-kana    | string | null: false              |
+|birthday           | date   | null: false              |
 
 ### Association
 
@@ -22,18 +22,17 @@
 
 ## Itemsテーブル
 
-|Column          |Type        |Options                   |
-|----------------|------------|--------------------------|
-|name            | string     | null: false              |
-|description     | text       | null: false              |
-|category        | string     | null: false              |
-|image           | text       | null: false              |
-|price           | integer    | null: false              |
-|status          | string     | null: false              |
-|delivery charge | string     | null: false              |
-|delivery days   | string     | null: false              |
-|shipping area   | string     | null: false              |
-|seller_id       | references | foreign_key: true        |
+|Column             |Type        |Options                   |
+|-------------------|------------|--------------------------|
+|name               | string     | null: false              |
+|description        | text       | null: false              |
+|price              | integer    | null: false              |
+|category_id        | integer    | null: false              |
+|status_id          | integer    | null: false              |
+|delivery_charge_id | integer    | null: false              |
+|delivery_days_id   | integer    | null: false              |
+|prefecture_id      | integer    | null: false              |
+|user               | references | foreign_key: true        |
 
 ### Association
 
@@ -45,14 +44,14 @@
 
 |Column        |Type        |Options                   |
 |--------------|------------|--------------------------|
-|customer_id   | references | foreign_key: true        |
-|seller_id     | references | foreign_key: true        |
-|items_id      | references | foreign_key: true        |
+|user          | references | foreign_key: true        |
+|item          | references | foreign_key: true        |
 
 ### Association
 
 - belongs_to :item
 - belongs_to :address
+- belongs_to :user
 
 
 ## Addressesテーブル
@@ -61,13 +60,12 @@
 |--------------|------------|--------------------------|
 |phone_number  | integer    | null: false              |
 |postal_code   | integer    | null: false              |
-|prefecture    | string     | null: false              |
-|city          | string     | null: false              |
-|address       | string     | null: false              |
-|building      | string     | null: false              |
-|user_id       | references | foreign_key: true        |
+|prefecture    | integer    | null: false              |
+|city          | integer    | null: false              |
+|address       | integer    | null: false              |
+|building      | integer    |                          |
+|trade         | references | foreign_key: true        |
 
 ### Association
 
-- belongs_to :user
 - has_one :trade
