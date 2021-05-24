@@ -7,17 +7,17 @@
 |nickname           | string | null: false              |
 |encrypted_password | string | null: false              |
 |email              | string | null: false, unique: true|
-|last-name          | string | null: false              |
-|first-name         | string | null: false              |
-|last-name-kana     | string | null: false              |
-|first-name-kana    | string | null: false              |
+|last_name          | string | null: false              |
+|first_name         | string | null: false              |
+|last_name_kana     | string | null: false              |
+|first_name_kana    | string | null: false              |
 |birthday           | date   | null: false              |
 
 ### Association
 
 - has_many :items
 - has_many :trades
-- has_many :addresses
+
 
 
 ## Itemsテーブル
@@ -50,7 +50,7 @@
 ### Association
 
 - belongs_to :item
-- belongs_to :address
+- has_one :address
 - belongs_to :user
 
 
@@ -60,7 +60,7 @@
 |--------------|------------|--------------------------|
 |phone_number  | integer    | null: false              |
 |postal_code   | integer    | null: false              |
-|prefecture    | integer    | null: false              |
+|prefecture_id | integer    | null: false              |
 |city          | integer    | null: false              |
 |address       | integer    | null: false              |
 |building      | integer    |                          |
@@ -68,4 +68,4 @@
 
 ### Association
 
-- has_one :trade
+- belongs_to :trade
