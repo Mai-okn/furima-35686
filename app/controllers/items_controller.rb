@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-  before_action :user_confirm, only: [:edit, :destroy]
+  before_action :user_confirm, only: [:edit, :destroy, :update]
 
   def index
     @items = Item.all.order(created_at: :desc)
@@ -33,7 +33,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if @item.update(item_params)
+    if user_confirm && @item.update(item_params)
       redirect_to item_path
     else
       render :edit
