@@ -36,7 +36,7 @@ class TradesController < ApplicationController
   end
 
   def sold_out_item
-    if @item.trade.present? 
+    if @item.trade.present? || current_user.id != @item.user_id 
       redirect_to root_path 
     end
   end
