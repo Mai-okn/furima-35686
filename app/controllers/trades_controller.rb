@@ -1,7 +1,8 @@
 class TradesController < ApplicationController
-  before_action :authenticate_user!
-  before_action :sold_out_item
-  before_action :get_item
+  before_action :authenticate_user!, only: [:index, :create]
+  before_action :get_item, only: [:index, :create]
+  before_action :sold_out_item, only: [:index, :create]
+
 
   def index
     @trade_address = TradeAddress.new
@@ -35,7 +36,6 @@ class TradesController < ApplicationController
   end
 
   def sold_out_item
-    @item = Item.find(params[:item_id])
     if @item.trade.present? 
       redirect_to root_path 
     end
