@@ -40,6 +40,11 @@ RSpec.describe TradeAddress, type: :model do
         @trade_address.valid?
         expect(@trade_address.errors.full_messages).to include("Prefectured can't be blank")
       end
+      it 'prefectured_idが１の場合は保存できないこと' do
+        @trade_address.prefectured_id = '1'
+        @trade_address.valid?
+        expect(@trade_address.errors.full_messages).to include("Prefectured can't be blank")
+      end
       it 'cityが空だと保存できないこと' do
         @trade_address.city = ''
         @trade_address.valid?
@@ -56,9 +61,29 @@ RSpec.describe TradeAddress, type: :model do
         expect(@trade_address.errors.full_messages).to include("Phone number can't be blank")
       end
       it 'phone_numberが10桁未満だと登録できない' do
-        @trade_address.phone_number = '11111111'
+        @trade_address.phone_number = '111222333'
         @trade_address.valid?
         expect(@trade_address.errors.full_messages).to include("Phone number is too short")
+      end
+      it 'phone_numberが12桁以上だと登録できない' do
+        @trade_address.phone_number = '111222333444'
+        @trade_address.valid?
+        expect(@trade_address.errors.full_messages).to include("Phone number is too short")
+      end
+      it 'phone_numberが英数混合だと登録できない' do
+        @trade_address.phone_number = 'aaa1111aaaa'
+        @trade_address.valid?
+        expect(@trade_address.errors.full_messages).to include("Phone number is too short")
+      end
+      it 'user_idと紐づいていないと登録できない' do
+        @trade_address.user_id = nil
+        @trade_address.valid?
+        expect(@trade_address.errors.full_messages).to include("User can't be blank")
+      end
+      it 'item_idと紐づいていないと登録できない' do
+        @trade_address.item_id = nil
+        @trade_address.valid?
+        expect(@trade_address.errors.full_messages).to include("Item can't be blank")
       end
     end
   end

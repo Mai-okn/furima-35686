@@ -1,15 +1,14 @@
 class TradesController < ApplicationController
   before_action :authenticate_user!
   before_action :sold_out_item
+  before_action :get_item
 
   def index
     @trade_address = TradeAddress.new
-    @item = Item.find(params[:item_id])
   end
 
   def create
     @trade_address = TradeAddress.new(trade_params)
-    @item = Item.find(params[:item_id])
     if @trade_address.valid?
       pay_item
       @trade_address.save
@@ -37,9 +36,13 @@ class TradesController < ApplicationController
 
   def sold_out_item
     @item = Item.find(params[:item_id])
-    if @item.trade.present? || current_user.id == @item.user_id 
+    if @item.trade.present? 
       redirect_to root_path 
     end
+  end
+
+  def get_item
+    @item = Item.find(params[:item_id])
   end
 
   

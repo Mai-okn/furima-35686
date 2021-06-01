@@ -10,9 +10,11 @@ class TradeAddress
     validates :city
     validates :address
     validates :token
+    validates :user_id
+    validates :item_id
   end
   validates :prefectured_id, numericality: {other_than: 1, message: "can't be blank"}
-  validates :phone_number, format:{with: /\A\d{10}$|^\d{11}\z/, message: "is too short"}
+  validates :phone_number, format:{with: /\A\d{10,11}\z/, message: "is too short"}
 
   def save
     trade = Trade.create(item_id: item_id, user_id: user_id)
