@@ -2,9 +2,11 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :user_confirm, only: [:edit, :destroy, :update]
+  before_action :sold_out_item, only:[:edit,:update]
 
   def index
     @items = Item.all.order(created_at: :desc)
+    
   end
 
 
@@ -60,6 +62,12 @@ class ItemsController < ApplicationController
 
   def user_confirm
     @item.user_id  ==  current_user.id
+  end
+
+  def sold_out_item
+    if @item.trade.present? || current_user.id == @item.user_id 
+      redirect_to root_path 
+    end
   end
   
 end
